@@ -1,0 +1,42 @@
+body {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.canvas-cover {
+    background-image: url("http://www.topoboi.com/pic/201311/2560x1600/topoboi.com-31046.jpg");
+    width: 100vh;
+    height: 100vh;
+    min-height: 600px;
+    min-width: 512px;
+}
+
+.settings {
+    margin: 0 !important;
+    width: calc(100% - 100vh);
+    min-height: 600px;
+}
+
+.segment {
+    overflow: auto;
+}
+
+.half-segment {
+    width: 40%;
+}
+
+.half-segment-right {
+    width: 40%;
+    float: right;
+    margin: 0!important;
+}
+
+.color-picker {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.top-margin-form {
+    margin-top: 20px;
+}

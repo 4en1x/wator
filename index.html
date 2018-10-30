@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>WA-TOR</title>
+
+    <meta charset="UTF-8">
+        <script language="javascript" type="text/javascript" src="src/index.js"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="canvas-cover">
+        <div>
+            <canvas id="myCanvas" width="512" height="512"></canvas>
+        </div>
+        <div>
+            <button id="iterationButton" class="ui blue button" onclick="iteration()">Next Iteration</button>
+            <button id="clearButton" class="ui yellow button" onclick="clearField()">Clear Field</button>
+            <button id="addTimerButton" class="ui green button" onclick="addTimer()">Add Timer</button>
+            <button id="removeTimerButton" class="ui red button" onclick="removeTimer()">Remove Timer</button>
+        </div>
+    </div>
+    <div class="ui segment settings">
+        <h3 class="ui huge center aligned header">Wa-Tor</h3>
+        <div class="ui divider"></div>
+
+        <p>Wa-Tor is a population dynamics simulation devised by Alexander Keewatin Dewdney and presented in the December 1984 issue of Scientific American in a 5-page article entitled "Computer Recreations: Sharks and fish wage an ecological war on the toroidal planet Wa-Tor".</p>
+        <p>Wa-Tor is usually implemented as a two-dimensional grid with three colours, one for fish, one for sharks and one for empty water. If a creature moves past the edge of the grid, it reappears on the opposite side. The sharks are predatory and eat the fish. Both sharks and fish live, move, reproduce and die in Wa-Tor according to the simple rules defined below. From these simple rules, complex emergent behavior can be seen to arise.</p>
+        <div class="ui divider"></div>
+        <h2>Settings</h2>
+
+        <div class="ui inverted segment color-picker">
+            <div class="ui inverted segment">
+                <h4>Choose color for shark (now color is
+                    <a class="ui blue empty circular label" id="colorLabelShark"></a>
+                    )</h4>
+                <button class="ui inverted circular icon red button" data-color='red' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon orange button" data-color='orange' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon yellow button" data-color='yellow' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon olive button" data-color='olive' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon green button" data-color='green' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon teal button" data-color='teal' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon blue button" data-color='blue' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon violet button" data-color='violet' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon purple button" data-color='purple' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon pink button" data-color='pink' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon brown button" data-color='brown' onclick="changeColorShark(this.dataset.color)"></button>
+                <button class="ui inverted circular icon grey button" data-color='grey' onclick="changeColorShark(this.dataset.color)"></button>
+            </div>
+            <div class="ui inverted segment">
+                <h4>Choose color for fish (now color is
+                    <a class="ui green empty circular label" id="colorLabelFish"></a>
+                    )</h4>
+                <button class="ui inverted circular icon red button" data-color='red' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon orange button" data-color='orange' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon yellow button" data-color='yellow' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon olive button" data-color='olive' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon green button" data-color='green' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon teal button" data-color='teal' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon blue button" data-color='blue' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon violet button" data-color='violet' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon purple button" data-color='purple' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon pink button" data-color='pink' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon brown button" data-color='brown' onclick="changeColorFish(this.dataset.color)"></button>
+                <button class="ui inverted circular icon grey button" data-color='grey' onclick="changeColorFish(this.dataset.color)"></button>
+            </div>
+        </div>
+
+        <h4>Select board size</h4>
+        <select id="boardSize" class="ui dropdown">
+            <option value="1">16</option>
+            <option value="2">32</option>
+            <option value="3">64</option>
+            <option value="4">128</option>
+            <option value="5">256</option>
+        </select>
+        <br>
+        <form class="ui form top-margin-form">
+            <div class="field">
+                <h4>Density (in %)</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="number" id="fishDensity" placeholder="Fish density (10%)">
+                    </div>
+                    <div class="field">
+                        <input type="number" id="sharkDensity" placeholder="Shark density (10%)">
+                    </div>
+                </div>
+                <h4>Energy</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="number" id="sharkEnergy" placeholder="Shark energy (5)">
+                    </div>
+                    <div class="field">
+                        <input type="number" id="sharkEnergyWhenEatFish" placeholder="Shark energy when eat fish (10)">
+                    </div>
+                </div>
+                <h4>Born time</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="number" id="fishBornTime" placeholder="Fish born time (5)">
+                    </div>
+                    <div class="field">
+                        <input type="number" id="sharkBornTime" placeholder="Shark born time (10)">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <button class="ui green button right floated" onclick="startCanvas()">Start Game</button>
+    </div>
+</body>
+</html>
